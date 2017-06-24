@@ -7,21 +7,19 @@ def memoize(method):
             self._memoize_cache = {}
             
         if(hasattr(self, 'hash')):
-            args = (str(method_args),
-                    str(method_kwargs),
+            args = (str(self.hash()),
                     method.__name__,
-                    str(self.hash()))
+                    str(method_args),
+                    str(method_kwargs))
         else:
-            args = (str(method_args),
-                    str(method_kwargs),
-                    method.__name__)
+            args = (method.__name__,
+                    str(method_args),
+                    str(method_kwargs))
 
         h = hash(args)
-        if h in self._memoize_cache:
-            return self._memoize_cache[h]
-
-        return_value = method(self, *method_args, **method_kwargs)
-        self._memoize_cache[h] = return_value
-        return return_value
+        if h not in self._memoize_cache:
+            self._memoize_cache[h] = method(self, *method_args, **method_kwargs)
+            
+        return self._memoize_cache[h]
         
     return _impl
