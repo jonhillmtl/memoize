@@ -1,6 +1,6 @@
 # Description
 
-A python decorator allowing a member function's return value to be memoized.
+A Python decorator allowing a member function's return value to be memoized.
 
 # Installation
 
